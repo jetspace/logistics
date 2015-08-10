@@ -104,8 +104,8 @@ static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *
 
 void app_clicked(GtkTreeView *view, GtkTreePath *path, GtkTreeViewColumn *col, gpointer data)
 {
-  GtkTreePath *p = gtk_tree_model_filter_convert_child_path_to_path(GTK_TREE_MODLE_FILTER(filter), path);
-  gtk_tree_model_get_iter (package_list, &iter, p);
+  GtkTreePath *p = gtk_tree_model_filter_convert_child_path_to_path(GTK_TREE_MODEL_FILTER(filter), path);
+  gtk_tree_model_get_iter (GTK_TREE_MODEL(package_list), &iter, p);
 
   char *name;
   gtk_tree_model_get(GTK_TREE_MODEL(package_list), &iter, PKG_NAME, &name, -1);
