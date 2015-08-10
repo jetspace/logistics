@@ -5,9 +5,11 @@
 
 #include "base.h"
 #include "list.h"
+#include "gui.h"
 
 struct option args[] = {
     {"listall", no_argument, NULL, 'l'},
+    {"gui"    , no_argument, NULL, 'g'}
 };
 
 
@@ -15,12 +17,14 @@ struct option args[] = {
 int main(int argc, char **argv)
 {
     int c =0;
-    while(( c = getopt_long(argc, argv, ":l", args, NULL)) != -1)
+    while(( c = getopt_long(argc, argv, ":lg", args, NULL)) != -1)
     {
         switch(c)
         {
             case 'l':
                 list_all_packages_to_terminal();
+            case 'g':
+                show_gui();
             break;
         }
     }
