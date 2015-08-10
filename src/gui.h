@@ -11,9 +11,9 @@ GtkWidget *content_root;
 
 void build_base_window(void)
 {
-  basewin = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+  basewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_resize(GTK_WINDOW(basewin),800, 600);
-  gtk_window_set_title(GTK_WINDWOW(basewin), "Logistics");
+  gtk_window_set_title(GTK_WINDOW(basewin), "Logistics");
 
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 }
