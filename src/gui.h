@@ -130,7 +130,7 @@ void load_search(void)
 
   //create filter
   filter = GTK_TREE_MODEL_FILTER(gtk_tree_modle_filter_new(GTK_TREE_MODEL(package_list), NULL));
-  gtk_tree_model_filter_set_visible_func(filter, (GtkTreeModelFilterVisibleFunc), package_filter, package_list, NULL);
+  gtk_tree_model_filter_set_visible_func(filter, (GtkTreeModelFilterVisibleFunc) package_filter, package_list, NULL);
 
   //setup model
   gtk_tree_view_set_model(GTK_TREE_VIEW(list_view), GTK_TREE_MODEL(filter));
