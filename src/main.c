@@ -23,6 +23,7 @@ int main(int argc, char **argv)
         {
             case 'l':
                 list_all_packages_to_terminal();
+            break;
             case 'g':
                 init_gui(argc, argv);
             break;

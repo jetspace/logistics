@@ -2,6 +2,7 @@
 #define LOGISTICS_GUI_H
 
 #include <gtk/gtk.h>
+#include <string.h>
 #define UIFILE "src/ui/content.ui"
 
 
@@ -14,6 +15,7 @@ GtkBuilder *builder;
 GtkWidget *search_entry;
 GtkWidget *list_view;
 GtkListStore *package_list;
+GtkTreeModelFilter *filter;
 GtkTreeIter iter;
 
 //PACKAGE LIST STORE
@@ -74,13 +76,37 @@ void init_package_list(void)
 
 }
 
+gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
+{
+  gtk_tree_model_filter_refilter(filter);
+  return FALSE;
+}
+
+static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *data)
+{
+  char *name;
+  gtk_tree_model_get(pkgs, iter, PKG_NAME, &name, -1);
+  char *querry = g_strdup(gtk_entry_get_text(GTK_ENTRY(search_entry)));
+
+  if(strstr(name, querry) != NULL)
+  {
+    free(name);
+    free(querry);
+    return TRUE;
+  }
+  else
+  {
+    free(name);
+    free(querry);
+    return FALSE;
+  }
+}
+
 void load_search(void)
 {
   load_content(UIFILE, "content_search");
   search_entry = GTK_WIDGET(gtk_builder_get_object(builder, "searchbox"));
   list_view = GTK_WIDGET(gtk_builder_get_object(builder, "results"));
-
-  init_package_list();
 
   //setup renderer
   GtkCellRenderer *renderer;
@@ -102,9 +128,16 @@ void load_search(void)
   column = gtk_tree_view_column_new_with_attributes("URL", renderer, "text", PKG_URL, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
+  //create filter
+  filter = GTK_TREE_MODEL_FILTER(gtk_tree_modle_filter_new(GTK_TREE_MODEL(package_list), NULL));
+  gtk_tree_model_filter_set_visible_func(filter, (GtkTreeModelFilterVisibleFunc), package_filter, package_list, NULL);
+
   //setup model
-  gtk_tree_view_set_model(GTK_TREE_VIEW(list_view), GTK_TREE_MODEL(package_list));
+  gtk_tree_view_set_model(GTK_TREE_VIEW(list_view), GTK_TREE_MODEL(filter));
   gtk_tree_view_expand_all(GTK_TREE_VIEW(list_view));
+
+  //signals
+  g_signal_connect(G_OBJECT(search_entry), "key-press-event", G_CALLBACK(querry_change), filter);
 
   //render everything
   gtk_widget_show_all(basewin);
@@ -116,6 +149,8 @@ void init_gui(int argc, char **argv)
   gtk_init(&argc, &argv);
 
   build_base_window();
+
+  init_package_list();
   load_search();
 
   gtk_widget_show_all(basewin);
