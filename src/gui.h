@@ -102,6 +102,18 @@ static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *
   }
 }
 
+void app_clicked(GtkTreeView *view, GtkTreePath *path, GtkTreeViewColumn *col, gpointer data)
+{
+  GtkTreePath *p = gtk_tree_model_filter_convert_child_path_to_path(GTK_TREE_MODLE_FILTER(filter), path);
+  gtk_tree_model_get_iter (package_list, &iter, p);
+
+  char *name;
+  gtk_tree_model_get(package_list, &iter, PKG_NAME, &name, -1);
+
+  g_print("Clicked on App: %s\n" name);
+  free(name);
+}
+
 void load_search(void)
 {
   load_content(UIFILE, "content_search");
@@ -138,6 +150,7 @@ void load_search(void)
 
   //signals
   g_signal_connect(G_OBJECT(search_entry), "key-press-event", G_CALLBACK(querry_change), filter);
+  g_signal_connect(G_OBJECT(list_view), "row-activated", G_CALLBACK(app_clicked), NULL);
 
   //render everything
   gtk_widget_show_all(basewin);
