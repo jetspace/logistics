@@ -8,7 +8,7 @@
 GtkWidget *basewin;
 GtkWidget *box;
 GtkWidget *content_root;
-GtkBuilder *builder
+GtkBuilder *builder;
 
 //SearchContent
 GtkWidget *search_entry;
@@ -87,19 +87,19 @@ void load_search(void)
   GtkTreeViewColumn *column;
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Name", renderer, "text", PKG_NAME, NULL)
+  column = gtk_tree_view_column_new_with_attributes("Name", renderer, "text", PKG_NAME, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Version", renderer, "text", PKG_VERSION, NULL)
+  column = gtk_tree_view_column_new_with_attributes("Version", renderer, "text", PKG_VERSION, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Size (kb)", renderer, "text", PKG_ISIZE, NULL)
+  column = gtk_tree_view_column_new_with_attributes("Size (kb)", renderer, "text", PKG_ISIZE, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("URL", renderer, "text", PKG_URL, NULL)
+  column = gtk_tree_view_column_new_with_attributes("URL", renderer, "text", PKG_URL, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   //setup model
