@@ -20,6 +20,11 @@ body {
 /* Search Button */
 #search {
 
-	margin-right: 5%;
+	width: 12%;
+	height: 3%;
+	border-radius: 10px;
+	background-color: #607D8B; /* Ascent Color (Material Design) */
+	color: #212121; /* Primary Text Color (Material Design) */
+	margin-left: 17%;
 
 }
