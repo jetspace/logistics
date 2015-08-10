@@ -13,17 +13,20 @@ body {
 	left: 0;
 	width: 100vw;
 	height: 20vh;
-	background-color: #FF5722; /* Primary Color (Material Design) */ 
+	background-color: #FF5722; /* Primary Color (Material Design) */
+	box-shadow: 0px 8px 8px black;  
 
 }
 
 /* Search Button */
 #search {
-
+	
+	margin-top: 47vh;
 	width: 12vw;
 	height: 3vh;
 	background-color: #607D8B; /* Ascent Color (Material Design) */
 	color: #212121; /* Primary Text Color (Material Design) */
 	margin-left: 83vw;
+	box-shadow: 0px 4px 4px black, 2px -2px 2px black, -2px 0px 2px black; /* Material Design Shadow */ 
 
 }
