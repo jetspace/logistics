@@ -16,6 +16,7 @@ void build_base_window(void)
   gtk_window_set_title(GTK_WINDOW(basewin), "Logistics");
 
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  gtk_container_add(GTK_CONTAINER(basewin), box);
 }
 
 void load_content(char *uifile, char *content)
