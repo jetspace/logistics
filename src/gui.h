@@ -20,13 +20,12 @@ void build_base_window(void)
 
 void load_content(char *uifile, char *content)
 {
-  GtkBuilder *builder = gtk_builder_new();
-  gtk_builder_add_from_file(builder, uifile, NULL);
+  GtkBuilder *builder = gtk_builder_new_from_file(uifile);
   content_root = GTK_WIDGET(gtk_builder_get_object(builder, content));
-  gtk_builder_connect_signals(builder, NULL);
-  g_object_unref(G_OBJECT(builder));
   gtk_box_pack_end(GTK_BOX(box), content_root, TRUE, TRUE, 0);
   gtk_widget_show_all(content_root);
+
+  g_object_unref(G_OBJECT(builder));
 }
 
 void init_gui(int argc, char **argv)
