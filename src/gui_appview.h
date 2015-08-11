@@ -9,7 +9,7 @@ void load_appview(char *app)
   alpm_list_t *i, *cache;
   gboolean match = FALSE;
   size_t p;
-  g_warning("LOADING WITH APP %s\n", app);
+  alpm_get_syncdbs(handle);
   for(p = 0; p < sizeof(dbs) / sizeof(dbs[0]); p++)
   {
       alpm_db_t *db = alpm_register_syncdb(handle, dbs[p], ALPM_SIG_USE_DEFAULT);
@@ -28,7 +28,6 @@ void load_appview(char *app)
         break;
   }
 
-  g_warning("FOUND APP %s\n", alpm_pkg_get_name(i->data))
 
   load_content(UIFILE, "content_app");
   //DataStuff
@@ -47,7 +46,6 @@ void load_appview(char *app)
   gtk_label_set_text(GTK_LABEL(pkgsize), size);
 
   gtk_widget_show_all(basewin);
-  g_warning("DRAWING GUI COMPLEATE"),
 }
 
 
