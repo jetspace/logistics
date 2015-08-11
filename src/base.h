@@ -22,6 +22,9 @@ const char *dbs[] = {
 */
 void init_alpm_sync(void)
 {
+  if(handle != NULL)
+    alpm_release(handle);
+
   handle = alpm_initialize("/","/var/lib/pacman",NULL);
   alpm_list_t *sync_dbs = alpm_get_syncdbs(handle);
 }
