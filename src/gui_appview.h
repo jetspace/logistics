@@ -6,6 +6,8 @@
 
 void load_appview(char *app)
 {
+
+  gboolean match = FALSE;
   for(i = 0; i < sizeof(dbs) / sizeof(dbs[0]); i++)
   {
       alpm_db_t *db = alpm_register_syncdb(handle, dbs[i], ALPM_SIG_USE_DEFAULT);
@@ -14,11 +16,14 @@ void load_appview(char *app)
       {
           if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
           {
-            i = sizeof(sizeof(dbs) / sizeof(dbs[0]); //skip next for loop
+            match = TRUE;
             break;
           }
-
+          if(match == TRUE)
+            break;
       }
+      if(match == TRUE)
+        break;
   }
 
   load_content(UIFILE, "content_app");
