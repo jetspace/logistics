@@ -19,7 +19,7 @@ body {
 /* Search Button */
 #search {
 	width: 10%;
-	height: 12%;
+	height: 15%;
 	position: absolute;
 	cursor: pointer;
 	text-decoration: none;
@@ -38,7 +38,7 @@ body {
 #menu_button {
 
 	color: #607D8B;
-	font-size: 1000%;
+	font-size: 800%;
 
 }
 
