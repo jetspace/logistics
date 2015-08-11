@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include "gui.h"
+#include "gui_search.h"
 
 void load_appview(char *app)
 {
@@ -26,6 +27,13 @@ void load_appview(char *app)
       }
       if(match == TRUE)
         break;
+  }
+
+  if(match == FALSE)
+  {
+    g_warning("Can't find requested package: %s\n", app);
+    load_search();
+    return;
   }
 
 
