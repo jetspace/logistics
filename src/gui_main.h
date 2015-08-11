@@ -6,16 +6,15 @@
 #include <webkit2/webkit2.h>
 #include "gui_search.h"
 
-void check_link (WebKitWebView *web_view, WebKitLoadEvent load_event, gpointer user_data)
+gboolean check_link (WebKitWebView *web_view, WebKitLoadEvent load_event,gchar *link ,gpointer e,gpointer user_data)
 {
-  char *link = g_strdup(webkit_web_view_get_uri(web_view));
-
   if(strcmp(link, "logistics://search") == 0)
   {
     gtk_widget_destroy(content_root);
     load_search();
+    return FALSE;
   }
-
+  return FALSE;
 }
 
 void load_main(void)
@@ -27,7 +26,7 @@ void load_main(void)
 
   GtkWidget *webview = webkit_web_view_new();
   webkit_web_view_load_uri(WEBKIT_WEB_VIEW(webview), START_PAGE);
-  g_signal_connect(G_OBJECT(webview), "load-changed", G_CALLBACK(check_link), NULL);
+  g_signal_connect(G_OBJECT(webview), "load-error", G_CALLBACK(check_link), NULL);
 
   gtk_container_add(GTK_CONTAINER(content_root), webview);
   gtk_box_pack_end(GTK_BOX(box), content_root, TRUE, TRUE, 0);
