@@ -116,7 +116,7 @@ void create_local_package_db(void)
 
   init_alpm_sync();
 
-      alpm_db_t *db = alpm_option_get_localdb(handle);
+      alpm_db_t *db = alpm_get_localdb(handle);
       alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
       for(i = cache; i; i = alpm_list_next(i))
       {
