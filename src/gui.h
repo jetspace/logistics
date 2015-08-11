@@ -49,7 +49,7 @@ void build_base_window(void)
 
   //create toolbar
   GtkWidget *toolbar = gtk_toolbar_new();
-  gtk_box_pack_start(GTK_BOX(box), toolbar, TRUE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(box), toolbar, FALSE, FALSE, 0);
 
   //fill toolbar
     //HOME
