@@ -17,6 +17,7 @@ void load_appview(char *app)
       cache = alpm_db_get_pkgcache(db);
       for(i = cache; i; i = alpm_list_next(i))
       {
+          g_warning("COMPARING WITH %s\n", alpm_pkg_get_name(i->data));
           if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
           {
             match = TRUE;
