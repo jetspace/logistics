@@ -62,7 +62,7 @@ void build_base_window(void)
     //SEARCH
     GtkToolItem *search = gtk_tool_button_new(NULL, "Search");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(search), "gtk-find");
-    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), 0);
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), -1);
     g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_search), NULL);
 
 
