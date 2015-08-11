@@ -109,7 +109,7 @@ void app_clicked(GtkTreeView *view, GtkTreePath *path, GtkTreeViewColumn *col, g
   gtk_tree_model_get_iter (GTK_TREE_MODEL(filter), &i, path);
 
   char *name;
-  gtk_tree_model_get(GTK_TREE_MODEL(package_list), &i, PKG_NAME, &name, -1);
+  gtk_tree_model_get(GTK_TREE_MODEL(filter), &i, PKG_NAME, &name, -1);
 
   g_print("Clicked on App: %s\n", name);
   free(name);
