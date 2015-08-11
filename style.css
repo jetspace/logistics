@@ -51,8 +51,11 @@ body {
 
 }
 
-a {
+a.search_link {
 
 	display: block;
+	height: 100%;
+   	width: 100%;
+    	text-decoration: none;
 
 }
