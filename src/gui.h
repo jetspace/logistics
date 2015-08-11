@@ -72,7 +72,7 @@ void build_base_window(void)
     GtkToolItem *installed = gtk_tool_button_new(NULL, "installed");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(installed), "gtk-save");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(installed), -1);
-    g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_installed), NULL);
+    g_signal_connect(G_OBJECT(installed), "clicked", G_CALLBACK(clicked_installed), NULL);
 
 
   g_signal_connect(G_OBJECT(basewin), "destroy", G_CALLBACK(destroy), NULL);
