@@ -32,6 +32,7 @@ enum {
 void load_content(char *uifile, char *content);
 #include "gui_search.h"
 #include "gui_main.h"
+#include "menucb.h"
 
 gboolean destroy(GtkWidget *w, GdkEvent *e, gpointer p)
 {
@@ -56,11 +57,13 @@ void build_base_window(void)
     GtkToolItem *home = gtk_tool_button_new(NULL, "Home");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(home), "gtk-home");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(home), 0);
+    g_signal_connect(G_OBJECT(home), "clicked", G_CALLBACK(clicked_home), NULL);
 
     //SEARCH
     GtkToolItem *search = gtk_tool_button_new(NULL, "Search");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(search), "gtk-find");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), 0);
+    g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_search), NULL);
 
 
   g_signal_connect(G_OBJECT(basewin), "destroy", G_CALLBACK(destroy), NULL);
