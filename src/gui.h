@@ -53,12 +53,12 @@ void build_base_window(void)
 
   //fill toolbar
     //HOME
-    GtkWidget *home = gtk_tool_button_new(NULL, "Home");
+    GtkToolItem *home = gtk_tool_button_new(NULL, "Home");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(home), "gtk-home");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(home), 0);
 
     //SEARCH
-    GtkWidget *search = gtk_tool_button_new(NULL, "Search");
+    GtkToolItem *search = gtk_tool_button_new(NULL, "Search");
     gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(search), "gtk-find");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), 0);
 
