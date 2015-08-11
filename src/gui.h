@@ -34,6 +34,7 @@ enum {
 void load_content(char *uifile, char *content);
 #include "gui_search.h"
 #include "gui_main.h"
+#include "gui_installed.h"
 #include "menucb.h"
 
 gboolean destroy(GtkWidget *w, GdkEvent *e, gpointer p)
