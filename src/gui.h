@@ -115,18 +115,14 @@ void create_local_package_db(void)
   local_package_list = gtk_list_store_new(PKG_STORE_LENGTH, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   init_alpm_sync();
-  alpm_option_set_dbpath("/var/lib/pacman");
 
-  alpm_db_t *db = alpm_option_get_localdb(handle);
-
-  alpm_list_t *list = alpm_db_getpkgcache(db);
-  alpm_list_t *i;
-  for(i = list; i; i = alpm_list_next(i))
-  {
-    gtk_list_store_append(GTK_LIST_STORE(local_package_list), &iter);
-    gtk_list_store_set(GTK_LIST_STORE(local_package_list), &iter, PKG_NAME, alpm_pkg_get_name(i->data), PKG_VERSION, alpm_pkg_get_version(i->data), PKG_DSIZE, alpm_pkg_get_size(i->data) /1000, PKG_ISIZE, alpm_pkg_get_isize(i->data) /1000, PKG_PACKAGER, alpm_pkg_get_packager(i->data), PKG_DESC, alpm_pkg_get_desc(i->data), PKG_URL, alpm_pkg_get_url(i->data), -1);
-  }
-
+      alpm_db_t *db = alpm_option_get_localdb(handle);
+      alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
+      for(i = cache; i; i = alpm_list_next(i))
+      {
+          gtk_list_store_append(GTK_LIST_STORE(local_package_list), &iter);
+          gtk_list_store_set(GTK_LIST_STORE(local_package_list), &iter, PKG_NAME, alpm_pkg_get_name(i->data), PKG_VERSION, alpm_pkg_get_version(i->data), PKG_DSIZE, alpm_pkg_get_size(i->data) /1000, PKG_ISIZE, alpm_pkg_get_isize(i->data) /1000, PKG_PACKAGER, alpm_pkg_get_packager(i->data), PKG_DESC, alpm_pkg_get_desc(i->data), PKG_URL, alpm_pkg_get_url(i->data), -1);
+      }
 }
 
 
