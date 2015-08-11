@@ -6,13 +6,13 @@
 
 void load_appview(char *app)
 {
-
+  alpm_list_t *i, *cache;
   gboolean match = FALSE;
   size_t p;
   for(p = 0; p < sizeof(dbs) / sizeof(dbs[0]); p++)
   {
       alpm_db_t *db = alpm_register_syncdb(handle, dbs[p], ALPM_SIG_USE_DEFAULT);
-      alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
+      cache = alpm_db_get_pkgcache(db);
       for(i = cache; i; i = alpm_list_next(i))
       {
           if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
