@@ -9,19 +9,6 @@ gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
   return FALSE;
 }
 
-static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *data)
-{
-  char *name;
-  gtk_tree_model_get(pkgs, iter, PKG_NAME, &name, -1);
-  char *querry = g_strdup(gtk_entry_get_text(GTK_ENTRY(search_entry)));
-
-  if(strstr(name, querry) != NULL)
-  {gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
-{
-  gtk_tree_model_filter_refilter(filter);
-  return FALSE;
-}
-
 gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *data)
 {
   char *name;
@@ -110,7 +97,6 @@ void load_search(void)
     return FALSE;
   }
 }
-
 
 void load_search(void)
 {
