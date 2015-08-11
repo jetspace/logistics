@@ -38,6 +38,7 @@ body {
 #menu_button {
 
 	color: #607D8B;
+	font-size: 1000%;
 
 }
 
@@ -59,3 +60,5 @@ a.search_link {
     	text-decoration: none;
 
 }
+
+
