@@ -1,6 +1,8 @@
 #ifndef LOGISTICS_GUI_SEARCH_H
 #define LOGISTICS_GUI_SEARCH_H
 
+#include "gui_appview.h"
+
 gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
 {
   gtk_tree_model_filter_refilter(filter);
@@ -49,7 +51,9 @@ void app_clicked(GtkTreeView *view, GtkTreePath *path, GtkTreeViewColumn *col, g
   char *name;
   gtk_tree_model_get(GTK_TREE_MODEL(filter), &i, PKG_NAME, &name, -1);
 
-  g_print("Clicked on App: %s\n", name);
+  // now, remove search and add appview content
+  gtk_widget_destroy(content_root);
+  load_appview(name);
   free(name);
 }
 
