@@ -47,6 +47,22 @@ void build_base_window(void)
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   gtk_container_add(GTK_CONTAINER(basewin), box);
 
+  //create toolbar
+  GtkWidget *toolbar = gtk_toolbar_new();
+  gtk_box_pack_start(GTK_BOX(box), toolbar, TRUE, FALSE, 0);
+
+  //fill toolbar
+    //HOME
+    GtkToolButton *home = gtk_tool_button_new(NULL, "Home");
+    gtk_tool_button_set_icon_name(home, "gtk-home");
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(home), 0);
+
+    //SEARCH
+    GtkToolButton *search = gtk_tool_button_new(NULL, "Search");
+    gtk_tool_button_set_icon_name(search, "gtk-find");
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), 0);
+
+
   g_signal_connect(G_OBJECT(basewin), "destroy", G_CALLBACK(destroy), NULL);
 }
 
