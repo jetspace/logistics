@@ -18,6 +18,8 @@ GtkListStore *package_list;
 GtkTreeModelFilter *filter;
 GtkTreeIter iter;
 
+GtkListStore *local_package_list;
+
 //PACKAGE LIST STORE
 enum {
   PKG_NAME = 0,
@@ -65,6 +67,12 @@ void build_base_window(void)
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), -1);
     g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_search), NULL);
 
+    //INSTALLED
+    GtkToolItem *installed = gtk_tool_button_new(NULL, "installed");
+    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(installed), "gtk-save");
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(installed), -1);
+    g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_installed), NULL);
+
 
   g_signal_connect(G_OBJECT(basewin), "destroy", G_CALLBACK(destroy), NULL);
 }
@@ -100,6 +108,28 @@ void init_package_list(void)
 
 
 
+void create_local_package_db(void)
+{
+
+  local_package_list = gtk_list_store_new(PKG_STORE_LENGTH, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+
+  init_alpm_sync();
+  alpm_option_set_dbpath("/var/lib/pacman");
+
+  pmdb_t *db = alpm_db_register_local();
+
+  alpm_list_t *list = alpm_db_getpkgcache(db);
+
+  for(i = list; i; i = alpm_list_next(i))
+  {
+    gtk_list_store_append(GTK_LIST_STORE(local_package_list), &iter);
+    gtk_list_store_set(GTK_LIST_STORE(local_package_list), &iter, PKG_NAME, alpm_pkg_get_name(i->data), PKG_VERSION, alpm_pkg_get_version(i->data), PKG_DSIZE, alpm_pkg_get_size(i->data) /1000, PKG_ISIZE, alpm_pkg_get_isize(i->data) /1000, PKG_PACKAGER, alpm_pkg_get_packager(i->data), PKG_DESC, alpm_pkg_get_desc(i->data), PKG_URL, alpm_pkg_get_url(i->data), -1);
+  }
+
+}
+
+
+
 void init_gui(int argc, char **argv)
 {
   gtk_init(&argc, &argv);
@@ -107,6 +137,7 @@ void init_gui(int argc, char **argv)
   build_base_window();
 
   init_package_list();
+  create_local_package_db();
   load_main();
 
   gtk_widget_show_all(basewin);

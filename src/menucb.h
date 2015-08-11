@@ -13,4 +13,10 @@ void clicked_search(GtkWidget *w, gpointer p)
     load_search();
 }
 
+void clicked_installed(GtkWidget *w, gpointer p)
+{
+    gtk_widget_destroy(content_root);
+    load_installed();
+}
+
 #endif
