@@ -8,10 +8,10 @@ void load_appview(char *app)
 {
 
   gboolean match = FALSE;
-  size_t i;
-  for(i = 0; i < sizeof(dbs) / sizeof(dbs[0]); i++)
+  size_t p;
+  for(p = 0; p < sizeof(dbs) / sizeof(dbs[0]); p++)
   {
-      alpm_db_t *db = alpm_register_syncdb(handle, dbs[i], ALPM_SIG_USE_DEFAULT);
+      alpm_db_t *db = alpm_register_syncdb(handle, dbs[p], ALPM_SIG_USE_DEFAULT);
       alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
       for(i = cache; i; i = alpm_list_next(i))
       {
