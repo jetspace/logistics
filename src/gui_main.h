@@ -25,7 +25,7 @@ void load_main(void)
   gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(content_root), 400);
   gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(content_root), 400);
 
-  GtkWidget *webview = webkit_web_view_new()
+  GtkWidget *webview = webkit_web_view_new();
   webkit_web_view_load_uri(WEBKIT_WEB_VIEW(webview), START_PAGE);
   g_signal_connect(G_OBJECT(webview), "load-changed", G_CALLBACK(check_link), NULL);
 

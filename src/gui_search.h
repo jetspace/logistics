@@ -20,7 +20,7 @@ static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *
   return FALSE;
 }
 
-static gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *data)
+gboolean package_filter(GtkTreeModel *pkgs, GtkTreeIter *iter, gpointer *data)
 {
   char *name;
   gtk_tree_model_get(pkgs, iter, PKG_NAME, &name, -1);
