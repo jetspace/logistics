@@ -116,10 +116,10 @@ void create_local_package_db(void)
   init_alpm_sync();
   alpm_option_set_dbpath("/var/lib/pacman");
 
-  pmdb_t *db = alpm_db_register_local();
+  alpm_db_t *db = alpm_option_get_localdb(handle);
 
   alpm_list_t *list = alpm_db_getpkgcache(db);
-
+  alpm_list_t *i;
   for(i = list; i; i = alpm_list_next(i))
   {
     gtk_list_store_append(GTK_LIST_STORE(local_package_list), &iter);
