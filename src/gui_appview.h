@@ -8,6 +8,7 @@ void load_appview(char *app)
 {
 
   gboolean match = FALSE;
+  size_t i;
   for(i = 0; i < sizeof(dbs) / sizeof(dbs[0]); i++)
   {
       alpm_db_t *db = alpm_register_syncdb(handle, dbs[i], ALPM_SIG_USE_DEFAULT);
