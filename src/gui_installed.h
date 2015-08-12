@@ -45,6 +45,7 @@ void load_installed(void)
   g_signal_connect(G_OBJECT(list_view), "row-activated", G_CALLBACK(app_clicked), NULL);
 
   //render everything
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "Installed Packages");
   gtk_widget_show_all(basewin);
 
 }

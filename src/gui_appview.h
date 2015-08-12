@@ -52,9 +52,10 @@ void load_appview(char *app)
   gtk_label_set_text(GTK_LABEL(pkgdesc), alpm_pkg_get_desc(i->data));
   gtk_label_set_text(GTK_LABEL(pkgver), alpm_pkg_get_version(i->data));
   char size[20];
-  snprintf(size, 20, "&ld kb", alpm_pkg_get_isize(i->data) / 1000);
+  snprintf(size, 20, "%ld kb", alpm_pkg_get_isize(i->data) / 1000);
   gtk_label_set_text(GTK_LABEL(pkgsize), size);
 
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "App details:");
   gtk_widget_show_all(basewin);
 }
 

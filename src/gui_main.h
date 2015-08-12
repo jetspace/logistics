@@ -30,6 +30,8 @@ void load_main(void)
 
   gtk_container_add(GTK_CONTAINER(content_root), webview);
   gtk_box_pack_end(GTK_BOX(box), content_root, TRUE, TRUE, 0);
+
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "Home");
   gtk_widget_show_all(basewin);
 }
 

@@ -49,11 +49,13 @@ void build_base_window(void)
 {
   basewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_resize(GTK_WINDOW(basewin),800, 600);
-  gtk_window_set_title(GTK_WINDOW(basewin), "JetSpace Logistics");
+  gtk_window_set_title(GTK_WINDOW(basewin), "JetSpace Logistics"); //keep as fallback...
 
   header = gtk_header_bar_new();
   gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
   gtk_header_bar_set_title(GTK_HEADER_BAR(header), "JetSpace Logistics");
+
+  gtk_window_set_titlebar (GTK_WINDOW(basewin), header);
 
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   gtk_container_add(GTK_CONTAINER(basewin), box);
