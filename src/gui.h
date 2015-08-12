@@ -11,6 +11,9 @@ GtkWidget *box;
 GtkWidget *content_root;
 GtkBuilder *builder;
 
+//HEADER BAR
+GtkWidget *header;
+
 //SearchContent
 GtkWidget *search_entry;
 GtkWidget *list_view;
@@ -46,7 +49,11 @@ void build_base_window(void)
 {
   basewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_resize(GTK_WINDOW(basewin),800, 600);
-  gtk_window_set_title(GTK_WINDOW(basewin), "Logistics");
+  gtk_window_set_title(GTK_WINDOW(basewin), "JetSpace Logistics");
+
+  header = gtk_header_bar_new();
+  gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
+  gtk_header_bar_set_title(GTK_HEADER_BAR(header), "JetSpace Logistics");
 
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   gtk_container_add(GTK_CONTAINER(basewin), box);
