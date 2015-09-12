@@ -267,7 +267,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="button1">
+          <object class="GtkButton" id="install_button">
             <property name="label" translatable="yes">Install</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>

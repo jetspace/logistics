@@ -39,6 +39,23 @@ void load_appview(char *app)
   }
 
 
+  init_alpm_sync();
+
+  gboolean is_installed = FALSE;
+  alpm_db_t *db = alpm_get_localdb(handle);
+  alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
+  for(i = cache; i; i = alpm_list_next(i))
+  {
+    if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
+      {
+        is_installed = TRUE
+        break;
+      }
+  }
+
+
+
+
   load_content(UIFILE, "content_app");
   //DataStuff
   GtkWidget *pkgname = GTK_WIDGET(gtk_builder_get_object(builder, "pkgname"));
@@ -46,6 +63,7 @@ void load_appview(char *app)
   GtkWidget *pkgdesc = GTK_WIDGET(gtk_builder_get_object(builder, "pkgdesc"));
   GtkWidget *pkgver = GTK_WIDGET(gtk_builder_get_object(builder, "pkgver"));
   GtkWidget *pkgsize = GTK_WIDGET(gtk_builder_get_object(builder, "pkgsize"));
+  GtkWidget *installbutton = GTK_WIDGET(gtk_builder_get_object(builder, "install_button"));
 
   gtk_label_set_text(GTK_LABEL(pkgname), alpm_pkg_get_name(i->data));
   gtk_label_set_text(GTK_LABEL(pkgpackager), alpm_pkg_get_packager(i->data));
@@ -56,6 +74,10 @@ void load_appview(char *app)
   gtk_label_set_text(GTK_LABEL(pkgsize), size);
 
   gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "App details:");
+
+  if(is_installed)
+    gtk_widget_set_sensitive(installbutton, FALSE);
+
   gtk_widget_show_all(basewin);
 }
 
