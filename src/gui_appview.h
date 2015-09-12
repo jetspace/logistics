@@ -43,12 +43,12 @@ void load_appview(char *app)
 
   gboolean is_installed = FALSE;
   alpm_db_t *db = alpm_get_localdb(handle);
-  alpm_list_t *i, *cache = alpm_db_get_pkgcache(db);
+  cache = alpm_db_get_pkgcache(db);
   for(i = cache; i; i = alpm_list_next(i))
   {
     if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
       {
-        is_installed = TRUE
+        is_installed = TRUE;
         break;
       }
   }
