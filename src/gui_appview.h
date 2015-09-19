@@ -4,6 +4,30 @@
 #include <string.h>
 #include "gui.h"
 #include "gui_search.h"
+#include <vte/vte.h>
+
+
+void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
+{
+	char *name = (char *) p;
+	g_warning("installing %s", name);
+
+
+	GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+	gtk_container_add(GTK_CONTAINER(win), box);
+
+	GtkWidget *terminal = vte_terminal_new();
+	gtk_box_pack_start(GTK_BOX(box), terminal, TRUE, TRUE, 0);
+	vte_terminal_set_pty(VTE_TERMINAL(terminal), VTE_PTY_DEFAULT);
+	vte_terminal_feed(VTE_TERMINAL(terminal), name, -1);
+
+	system(g_strdup_printf("gksudo 'pacman -S %s'", name));
+
+	gtk_widget_show_all(win);
+
+
+}
 
 void load_appview(char *app)
 {
@@ -30,12 +54,6 @@ void load_appview(char *app)
         break;
   }
 
- /* if(match == FALSE)
-  {
-    g_warning("Can't find requested package: %s\n", app);
-    load_search();
-    return;
-  }*/
   gboolean is_installed = FALSE;
 
 
@@ -81,6 +99,9 @@ void load_appview(char *app)
 
   if(is_installed)
     gtk_widget_set_sensitive(installbutton, FALSE);
+
+	char *name = g_strdup(alpm_pkg_get_name(i->data));
+	g_signal_connect(G_OBJECT(installbutton), "clicked", G_CALLBACK(install_app), name);
 
   gtk_widget_show_all(basewin);
 }
