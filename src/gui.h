@@ -35,6 +35,7 @@ enum {
   PKG_STORE_LENGTH
 };
 void load_content(char *uifile, char *content);
+void update_packagelists(void);
 #include "gui_search.h"
 #include "gui_main.h"
 #include "gui_installed.h"
@@ -67,19 +68,16 @@ void build_base_window(void)
   //fill toolbar
     //HOME
     GtkToolItem *home = gtk_tool_button_new(NULL, "Home");
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(home), "gtk-home");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(home), 0);
     g_signal_connect(G_OBJECT(home), "clicked", G_CALLBACK(clicked_home), NULL);
 
     //SEARCH
     GtkToolItem *search = gtk_tool_button_new(NULL, "Search");
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(search), "gtk-find");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), -1);
     g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_search), NULL);
 
     //INSTALLED
-    GtkToolItem *installed = gtk_tool_button_new(NULL, "installed");
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(installed), "gtk-save");
+    GtkToolItem *installed = gtk_tool_button_new(NULL, "Installed");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(installed), -1);
     g_signal_connect(G_OBJECT(installed), "clicked", G_CALLBACK(clicked_installed), NULL);
 
@@ -134,6 +132,13 @@ void create_local_package_db(void)
       }
 }
 
+void update_packagelists(void)
+{
+	g_object_unref(local_package_list);
+	create_local_package_db();
+	g_object_unref(package_list);
+	init_package_list();
+}
 
 
 void init_gui(int argc, char **argv)

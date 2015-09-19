@@ -21,6 +21,9 @@ static gboolean new_output(GIOChannel *channel, GIOCondition condition, gpointer
 			fclose(cmd);
 			gtk_widget_set_sensitive(basewin, TRUE);
 			gtk_widget_destroy(logwin);
+			gtk_widget_destroy(content_root);
+			update_packagelists();
+			load_search();
 			return FALSE; //DESTROY WATCH: PROGRAM EXITED
 		}
 
@@ -36,6 +39,7 @@ static gboolean new_output(GIOChannel *channel, GIOCondition condition, gpointer
 		fclose(cmd);
 		gtk_widget_set_sensitive(basewin, TRUE);
 		gtk_widget_destroy(logwin);
+		update_packagelists();
 		return FALSE; //DESTROY WATCH: PROGRAM EXITED
 	}
 }
@@ -43,8 +47,6 @@ static gboolean new_output(GIOChannel *channel, GIOCondition condition, gpointer
 void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 {
 	char *name = (char *) p;
-	g_warning("installing %s", name);
-
 
 	gtk_widget_set_sensitive(basewin, FALSE);
 	logwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -63,7 +65,8 @@ void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 
 	gtk_box_pack_start(GTK_BOX(box), scrollwin, TRUE, TRUE, 0);
 
-	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy %s --noconfirm' && echo -n DONE || echo -n DONE\"", name), "r");
+	char *message = g_strdup_printf("Please enter the root password to install %s", name);
+	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy %s --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", name, message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
 	

@@ -1,10 +1,8 @@
 #ifndef LOGISTICS_GUI_SEARCH_H
 #define LOGISTICS_GUI_SEARCH_H
 
-#include "gui_appview.h"
-
 void load_search(void);
-
+#include "gui_appview.h"
 gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
 {
   gtk_tree_model_filter_refilter(filter);
