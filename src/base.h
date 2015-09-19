@@ -20,10 +20,13 @@ const char *dbs[] = {
 /*
   Init ALPM
 */
+int firstrun = 0;
 void init_alpm_sync(void)
 {
-  if(handle != NULL)
+  if(!firstrun == 0)
     alpm_release(handle);
+
+  firstrun = 1;
 
   handle = alpm_initialize("/","/var/lib/pacman",NULL);
   alpm_list_t *sync_dbs = alpm_get_syncdbs(handle);

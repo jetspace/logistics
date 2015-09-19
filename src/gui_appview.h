@@ -18,7 +18,6 @@ void load_appview(char *app)
       cache = alpm_db_get_pkgcache(db);
       for(i = cache; i; i = alpm_list_next(i))
       {
-          g_warning("COMPARING WITH %s\n", alpm_pkg_get_name(i->data));
           if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
           {
             match = TRUE;
@@ -31,27 +30,32 @@ void load_appview(char *app)
         break;
   }
 
-  if(match == FALSE)
+ /* if(match == FALSE)
   {
     g_warning("Can't find requested package: %s\n", app);
     load_search();
     return;
-  }
-
-
-  init_alpm_sync();
-
+  }*/
   gboolean is_installed = FALSE;
-  alpm_db_t *db = alpm_get_localdb(handle);
-  cache = alpm_db_get_pkgcache(db);
-  for(i = cache; i; i = alpm_list_next(i))
-  {
-    if(strcmp(app, alpm_pkg_get_name(i->data)) == 0)
-      {
-        is_installed = TRUE;
-        break;
-      }
-  }
+
+
+	char i_b[30];
+	GtkTreeModel *model = GTK_TREE_MODEL(local_package_list);
+	GtkTreeIter iter;
+	int x = 0;
+
+	snprintf(i_b, 30, "%d", x);
+	while(gtk_tree_model_get_iter_from_string(model, &iter, i_b))
+	{
+		char *buff;
+		gtk_tree_model_get(model, &iter, PKG_NAME, &buff, -1);
+		if(strcmp(app, buff) == 0)
+			is_installed = TRUE;
+		g_free(buff);
+		x++;
+		snprintf(i_b, 30, "%d", x);
+	}
+
 
 
 
