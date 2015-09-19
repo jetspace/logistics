@@ -38,13 +38,10 @@ body {
 
 #menu_button {
 
-  	position: absolute;
 	color: #FFFFFF;
 	font-size: 15vw;
   	height: 15%;
-  	width: auto;
-  	top: 0px;
-  	left: 0px;
+  	width: 15%;
 
 }
 
