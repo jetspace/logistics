@@ -81,7 +81,7 @@ body {
 	line-height: 21vh;
 }
 
-#apps:nth-child(2) {
+li:nth-child(2) {
 
         background-color: red;
 
