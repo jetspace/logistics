@@ -2,10 +2,43 @@
 #define LOGISTICS_GUI_APPVIEW_H
 
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "gui.h"
 #include "gui_search.h"
-#include <vte/vte.h>
 
+GtkWidget *text_view;
+GtkWidget *logwin;
+
+static gboolean new_output(GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+	FILE *cmd = data;
+	char out[2048];
+	if(fgets(out, 2048, cmd))
+	{
+		if(strcmp(out, "DONE") == 0)
+		{
+			fclose(cmd);
+			gtk_widget_set_sensitive(basewin, TRUE);
+			gtk_widget_destroy(logwin);
+			return FALSE; //DESTROY WATCH: PROGRAM EXITED
+		}
+
+		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+		GtkTextIter iter;
+		gtk_text_buffer_get_end_iter(buffer, &iter);
+		gtk_text_buffer_insert(buffer, &iter, out, -1);
+		return TRUE;
+	}
+	else
+	{
+		g_warning("PACMAN EXITED UNEXPECTED");
+		fclose(cmd);
+		gtk_widget_set_sensitive(basewin, TRUE);
+		gtk_widget_destroy(logwin);
+		return FALSE; //DESTROY WATCH: PROGRAM EXITED
+	}
+}
 
 void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 {
@@ -13,18 +46,30 @@ void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	g_warning("installing %s", name);
 
 
-	GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_set_sensitive(basewin, FALSE);
+	logwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-	gtk_container_add(GTK_CONTAINER(win), box);
+	gtk_container_add(GTK_CONTAINER(logwin), box);
 
-	GtkWidget *terminal = vte_terminal_new();
-	gtk_box_pack_start(GTK_BOX(box), terminal, TRUE, TRUE, 0);
-	vte_terminal_set_pty(VTE_TERMINAL(terminal), VTE_PTY_DEFAULT);
-	vte_terminal_feed(VTE_TERMINAL(terminal), name, -1);
 
-	system(g_strdup_printf("gksudo 'pacman -S %s'", name));
+	GtkWidget *scrollwin = gtk_scrolled_window_new(NULL, NULL);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(scrollwin), 300);
+	gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scrollwin), 400);
 
-	gtk_widget_show_all(win);
+	text_view = gtk_text_view_new();
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(text_view), FALSE);
+	gtk_container_add(GTK_CONTAINER(scrollwin), text_view);
+
+	gtk_box_pack_start(GTK_BOX(box), scrollwin, TRUE, TRUE, 0);
+
+	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy %s --noconfirm' && echo -n DONE || echo -n DONE\"", name), "r");
+	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
+	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
+	
+
+
+	gtk_widget_show_all(logwin);
 
 
 }
