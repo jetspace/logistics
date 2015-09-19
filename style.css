@@ -66,6 +66,7 @@ body {
 }
 #apps li {
 	width: 20.5%;
+        margin: 2%;
 	border: 1px solid #607D8B;
 	background-color: #FFFFFF;
 	height: 26%;
@@ -77,5 +78,5 @@ body {
 	display: inline;
 	font-weight: bold;
 	box-shadow: 0px 4px 4px #B6B6B6, 2px -2px 2px #B6B6B6, -2px 0px 2px #B6B6B6;
-	line-height: 21vh;
+	line-height: 26%;
 }
