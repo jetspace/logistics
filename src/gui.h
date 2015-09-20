@@ -39,6 +39,7 @@ void update_packagelists(void);
 #include "gui_search.h"
 #include "gui_main.h"
 #include "gui_installed.h"
+#include "gui_updates.h"
 #include "menucb.h"
 
 gboolean destroy(GtkWidget *w, GdkEvent *e, gpointer p)
@@ -80,6 +81,11 @@ void build_base_window(void)
     GtkToolItem *installed = gtk_tool_button_new(NULL, "Installed");
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(installed), -1);
     g_signal_connect(G_OBJECT(installed), "clicked", G_CALLBACK(clicked_installed), NULL);
+
+    //UPDATES
+    GtkToolItem *updates = gtk_tool_button_new(NULL, "Updates");
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(updates), -1);
+    g_signal_connect(G_OBJECT(updates), "clicked", G_CALLBACK(clicked_updates), NULL);
 
 
   g_signal_connect(G_OBJECT(basewin), "destroy", G_CALLBACK(destroy), NULL);
