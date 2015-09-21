@@ -47,6 +47,40 @@ gboolean destroy(GtkWidget *w, GdkEvent *e, gpointer p)
   gtk_main_quit();
 }
 
+void refresh_clicked(GtkWidget *w, GdkEvent *e, gpointer p)
+{
+  gtk_widget_set_sensitive(basewin, FALSE);
+  logwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  gtk_container_add(GTK_CONTAINER(logwin), box);
+
+  GtkWidget *scrollwin = gtk_scrolled_window_new(NULL, NULL);
+  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(scrollwin), 300);
+  gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scrollwin), 400);
+
+  text_view = gtk_text_view_new();
+  gtk_text_view_set_editable(GTK_TEXT_VIEW(text_view), FALSE);
+  gtk_container_add(GTK_CONTAINER(scrollwin), text_view);
+
+  gtk_box_pack_start(GTK_BOX(box), scrollwin, TRUE, TRUE, 0);
+
+  pb = gtk_progress_bar_new();
+  gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
+  gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
+
+  char *message = g_strdup_printf("Please enter the root password to update package data base");
+  FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", message), "r");
+  GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
+  g_io_add_watch(channel, G_IO_IN, new_output, pacman);
+
+
+
+  gtk_widget_show_all(logwin);
+
+
+}
+
 void build_base_window(void)
 {
   basewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -58,6 +92,10 @@ void build_base_window(void)
   gtk_header_bar_set_title(GTK_HEADER_BAR(header), "JetSpace Logistics");
 
   gtk_window_set_titlebar (GTK_WINDOW(basewin), header);
+
+  GtkWidget *refresh = gtk_button_new_with_label("Refresh");
+  gtk_header_bar_pack_start(GTK_HEADER_BAR(header), refresh);
+  g_signal_connect(G_OBJECT(refresh), "clicked", G_CALLBACK(refresh_clicked), NULL);
 
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   gtk_container_add(GTK_CONTAINER(basewin), box);

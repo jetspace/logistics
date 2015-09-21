@@ -8,7 +8,7 @@
 #include "gui.h"
 #include "wrap.h"
 
-#define VERSION "0.03"
+#define VERSION "0.04"
 
 char *AUTHORS[] = {"Marius Messerschmidt <marius.messerschmidt@googlemail.com>"};
 char *DESIGNER[] = {"Tom Messerschmidt <tom.messerschmidt@googlemail.com>"};
