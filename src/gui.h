@@ -36,6 +36,7 @@ enum {
 };
 void load_content(char *uifile, char *content);
 void update_packagelists(void);
+#include "gui_tools.h"
 #include "gui_search.h"
 #include "gui_main.h"
 #include "gui_installed.h"
@@ -73,8 +74,6 @@ void refresh_clicked(GtkWidget *w, GdkEvent *e, gpointer p)
   FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", message), "r");
   GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
   g_io_add_watch(channel, G_IO_IN, new_output, pacman);
-
-
 
   gtk_widget_show_all(logwin);
 

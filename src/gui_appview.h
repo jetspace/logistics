@@ -6,45 +6,7 @@
 #include <stdlib.h>
 #include "gui.h"
 #include "gui_search.h"
-
-GtkWidget *text_view;
-GtkWidget *logwin;
-GtkWidget *pb;
-
-static gboolean new_output(GIOChannel *channel, GIOCondition condition, gpointer data)
-{
-	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
-	FILE *cmd = data;
-	char out[2048];
-	if(fgets(out, 2048, cmd))
-	{
-		if(strcmp(out, "DONE") == 0)
-		{
-			fclose(cmd);
-			gtk_widget_set_sensitive(basewin, TRUE);
-			gtk_widget_destroy(logwin);
-			gtk_widget_destroy(content_root);
-			update_packagelists();
-			load_search();
-			return FALSE; //DESTROY WATCH: PROGRAM EXITED
-		}
-
-		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
-		GtkTextIter iter;
-		gtk_text_buffer_get_end_iter(buffer, &iter);
-		gtk_text_buffer_insert(buffer, &iter, out, -1);
-		return TRUE;
-	}
-	else
-	{
-		g_warning("PACMAN EXITED UNEXPECTED");
-		fclose(cmd);
-		gtk_widget_set_sensitive(basewin, TRUE);
-		gtk_widget_destroy(logwin);
-		update_packagelists();
-		return FALSE; //DESTROY WATCH: PROGRAM EXITED
-	}
-}
+#include "gui_tools.h"
 
 void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 {
@@ -75,8 +37,8 @@ void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy %s --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", name, message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
-	
 
+	fallto = FALLBACK_TO_SEARCH;
 
 	gtk_widget_show_all(logwin);
 
@@ -103,7 +65,7 @@ void remove_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	gtk_container_add(GTK_CONTAINER(scrollwin), text_view);
 
 	gtk_box_pack_start(GTK_BOX(box), scrollwin, TRUE, TRUE, 0);
-	
+
 	pb = gtk_progress_bar_new();
 	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
 	gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
@@ -112,8 +74,8 @@ void remove_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -R %s --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", name, message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
-	
 
+	fallto = FALLBACK_TO_INSTALLED;
 
 	gtk_widget_show_all(logwin);
 

@@ -1,7 +1,7 @@
 #ifndef LOGISTICS_GUI_UPDATES_H
 #define LOGISTICS_GUI_UPDATES_H
 
-#include "gui_appview.h"
+#include "gui_tools.h"
 
 void load_search(void);
 GtkWidget *update_view;
@@ -50,9 +50,9 @@ void update_all(GtkWidget *w, GdkEvent *e, gpointer p)
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Su --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
-	
 
 
+	fallto = FALLBACK_TO_UPDATES;
 	gtk_widget_show_all(logwin);
 
 
@@ -94,9 +94,9 @@ void load_updates(void)
 		char *oldv = g_strdup(strtok(NULL, " "));
 		strtok(NULL, ">");
 		char *newv = g_strdup(strtok(NULL, "\n\0"));
-		
+
 		gtk_widget_set_sensitive(updateall, TRUE);
-		
+
 		gtk_list_store_append(GTK_LIST_STORE(updates), &iter);
           	gtk_list_store_set(GTK_LIST_STORE(updates), &iter, UPDATE_NAME, name, UPDATE_VERSION_OLD, oldv, UPDATE_VERSION_NEW, newv, -1);
 	}

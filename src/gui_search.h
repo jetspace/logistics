@@ -3,6 +3,7 @@
 
 void load_search(void);
 #include "gui_appview.h"
+#include "gui_tools.h"
 gboolean querry_change(GtkWidget *b, GdkEvent *e, GtkTreeModelFilter *filter)
 {
   gtk_tree_model_filter_refilter(filter);
