@@ -8,7 +8,7 @@
 #include "gui.h"
 #include "wrap.h"
 
-#define VERSION "0.05"
+#define VERSION "0.06"
 
 char *AUTHORS[] = {"Marius Messerschmidt <marius.messerschmidt@googlemail.com>"};
 char *DESIGNER[] = {"Tom Messerschmidt <tom.messerschmidt@googlemail.com>"};
@@ -21,7 +21,8 @@ struct option args[] = {
     {"remove"    , required_argument, NULL, 'r'},
     {"update"    , required_argument, NULL, 'u'},
     {"upgrade"    , no_argument, NULL, 'U'},
-    {"gui"    , no_argument, NULL, 'g'}
+    {"gui"    , no_argument, NULL, 'g'},
+    {"gui-updates"    , no_argument, NULL, 'x'}
 };
 
 
@@ -61,12 +62,13 @@ void show_help(void)
 	puts("	-U | --upgrade          : Update all packages");
 	puts(" :: GUI functions");
 	puts("	-g | --gui              : Show GUI package manager");
+  puts("	-x | --gui-updates      : Show GUI package manager (show updates)");
 }
 
 int main(int argc, char **argv)
 {
     int c =0;
-    while(( c = getopt_long(argc, argv, ":lhvi:r:uUg", args, NULL)) != -1)
+    while(( c = getopt_long(argc, argv, ":lhvi:r:uUgx", args, NULL)) != -1)
     {
         switch(c)
         {
@@ -94,7 +96,10 @@ int main(int argc, char **argv)
                	system_upgrade();
             break;
             case 'g':
-                init_gui(argc, argv);
+                init_gui(argc, argv, 0);
+            break;
+            case 'x':
+                init_gui(argc, argv, 1);
             break;
 			default:
 				show_help();

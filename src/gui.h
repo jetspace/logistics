@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 #include <string.h>
-#define UIFILE "src/ui/content.ui"
+#define UIFILE "/usr/share/logistics/ui/content.ui"
 
 
 GtkWidget *basewin;
@@ -184,7 +184,7 @@ void update_packagelists(void)
 }
 
 
-void init_gui(int argc, char **argv)
+void init_gui(int argc, char **argv, int mode)
 {
   gtk_init(&argc, &argv);
 
@@ -192,7 +192,17 @@ void init_gui(int argc, char **argv)
 
   init_package_list();
   create_local_package_db();
-  load_main();
+
+
+  switch(mode)
+  {
+    case 0:
+      load_main();
+    break;
+    case 1:
+      load_updates();
+    break;
+  }
 
   gtk_widget_show_all(basewin);
   gtk_main();
