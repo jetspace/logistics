@@ -4,3 +4,5 @@ install:
 	cp logistics /usr/bin/
 	mkdir -p /usr/share/logistics/ui
 	cp src/ui/* /usr/share/logistics/ui/
+	sudo mkdir /usr/share/locale/de/LC_MESSAGES/ -p
+	sudo cp translations/de.mo /usr/share/locale/de/LC_MESSAGES/logistics.mo

@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: logistics\n"
+"POT-Creation-Date: 2015-09-22 17:30+0200\n"
+"PO-Revision-Date: 2015-09-22 17:30+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-Basepath: ../src\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _(;_\n"
+"X-Poedit-SearchPath-0: main.c\n"
+"X-Poedit-SearchPath-1: ui/content.ui\n"
+"X-Poedit-SearchPath-2: gui.h\n"
+"X-Poedit-SearchPath-3: gui_appview.h\n"
+"X-Poedit-SearchPath-4: gui_search.h\n"
+"X-Poedit-SearchPath-5: gui_installed.h\n"
+"X-Poedit-SearchPath-6: gui_updates.h\n"
+"X-Poedit-SearchPath-7: gui_main.h\n"
+
+#: main.c:34 main.c:52
+msgid "- JetSpace Logistics package management frontend -"
+msgstr "- JetSpace Logistics Paketverwaltungs Frontend -"
+
+#: main.c:35
+msgid "Copyright (C) 2015 Marius Messerschmidt (JetSpace)"
+msgstr "Copyright (C) 2015 Marius Messerschmidt (JetSpace)"
+
+#: main.c:56
+msgid "Available Options:"
+msgstr "Verfügbare Optionen:"
+
+#: main.c:57
+msgid " :: System functions"
+msgstr " :: System Funktionen"
+
+#: main.c:58
+msgid "\t-l | --listall          : Print all available packages to stdout"
+msgstr "\t-l | --listall          : Alle verfügbaren Pakete ausgeben"
+
+#: main.c:59
+msgid "\t-h | --help             : Show this help output"
+msgstr "\t-h | --help             : Zeige diese Hilfe"
+
+#: main.c:60
+msgid "\t-v | --version          : Print version information"
+msgstr "\t-v | --version          : Gebe Versionsinformationen aus"
+
+#: main.c:61
+msgid " :: Pacman wraper functions"
+msgstr " :: Pacman wrapper Funktionen"
+
+#: main.c:62
+msgid "\t-i | --install [pkg]    : Install [pkg]"
+msgstr "\t-i | --install [pkg]    : Installiere [pkg]"
+
+#: main.c:63
+msgid "\t-r | --remove  [pkg]    : Remove  [pkg]"
+msgstr "\t-r | --remove  [pkg]    : Entferne  [pkg]"
+
+#: main.c:64
+msgid "\t-u | --update           : Update package data base"
+msgstr "\t-u | --update           : Aktualisiere Paketdatenbank"
+
+#: main.c:65
+msgid "\t-U | --upgrade          : Update all packages"
+msgstr "\t-U | --upgrade          : Aktualisiere alle Pakete"
+
+#: main.c:66
+msgid " :: GUI functions"
+msgstr " :: GUI Funktionen"
+
+#: main.c:67
+msgid "\t-g | --gui              : Show GUI package manager"
+msgstr "\t-g | --gui              : Zeige grafische Paketverwaltung"
+
+#: main.c:68
+msgid "\t-x | --gui-updates      : Show GUI package manager (show updates)"
+msgstr ""
+"\t-x | --gui-updates      : Zeige grafische Paketverwaltung (Zeige Updates)"
+
+#: gui.h:73
+msgid "Please enter the root password to update package data base"
+msgstr ""
+"Bitte geben sie das root Passwort ein um die Paketdatenbanken zu "
+"aktualisieren"
+
+#: gui.h:95
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: gui.h:108 gui_main.h:34
+msgid "Home"
+msgstr "Startseite"
+
+#: gui.h:113 gui_search.h:88
+msgid "Search"
+msgstr "Suche"
+
+#: gui.h:118
+msgid "Installed"
+msgstr "Installiert"
+
+#: gui.h:123 gui_updates.h:105
+msgid "Updates"
+msgstr "Updates"
+
+#: gui_appview.h:36
+#, c-format
+msgid "Please enter the root password to install %s"
+msgstr "Bitte geben sie das root Passwort ein um %s zu installieren"
+
+#: gui_appview.h:73
+#, c-format
+msgid "Please enter the root password to remove %s"
+msgstr "Bitte geben sie das root Passwort ein um %s zu entfernen"
+
+#: gui_appview.h:152
+msgid "Package details:"
+msgstr "Paket Eigenschaften"
+
+#: gui_installed.h:20 gui_search.h:60 gui_updates.h:75
+msgid "Name"
+msgstr "Name"
+
+#: gui_installed.h:24 gui_search.h:64
+msgid "Version"
+msgstr "Version"
+
+#: gui_installed.h:28 gui_search.h:68
+msgid "Size (kb)"
+msgstr "Größe (kb)"
+
+#: gui_installed.h:32 gui_search.h:72
+msgid "URL"
+msgstr "URL"
+
+#: gui_installed.h:48
+msgid "Installed Packages"
+msgstr "Installierte Pakete"
+
+#: gui_updates.h:49
+msgid "Please enter the root password to update your system"
+msgstr "Bitte geben sie das root Passwort ein um ihr System zu aktualisieren"
+
+#: gui_updates.h:79
+msgid "Version (old)"
+msgstr "Version (alt)"
+
+#: gui_updates.h:83
+msgid "Version (new)"
+msgstr "Version (neu)"
+
+#: ui/content.ui:13
+msgid "   Package Details   "
+msgstr "   Paket Eigenschaften   "
+
+#: ui/content.ui:46
+msgid "Name:"
+msgstr "Name:"
+
+#: ui/content.ui:59
+msgid "pkgname"
+msgstr "pkgname"
+
+#: ui/content.ui:84
+msgid "Packager:"
+msgstr "Paketersteller:"
+
+#: ui/content.ui:97
+msgid "packager"
+msgstr "packager"
+
+#: ui/content.ui:122
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: ui/content.ui:136
+msgid "Package Descriptionwill be placed here."
+msgstr "Package Descriptionwill be placed here."
+
+#: ui/content.ui:174
+msgid "Version:"
+msgstr "Version:"
+
+#: ui/content.ui:187
+msgid "pkgver"
+msgstr "pkgver"
+
+#: ui/content.ui:212
+msgid "Size (Installed):"
+msgstr "Größe (Installiert):"
+
+#: ui/content.ui:225
+msgid "pkgsize kb"
+msgstr "pkgsize kb"
+
+#: ui/content.ui:259
+msgid "Install"
+msgstr "Installieren"
+
+#: ui/content.ui:273
+msgid "Remove"
+msgstr "Entfernen"
+
+#: ui/content.ui:376
+msgid "Update All"
+msgstr "Alle Aktualisieren"

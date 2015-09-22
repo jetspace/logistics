@@ -3,12 +3,15 @@
 #include <unistd.h>
 #include <getopt.h>
 
+#include <glib/gi18n.h>
+#include <locale.h>
+
 #include "base.h"
 #include "list.h"
 #include "gui.h"
 #include "wrap.h"
 
-#define VERSION "0.06"
+#define VERSION "0.07"
 
 char *AUTHORS[] = {"Marius Messerschmidt <marius.messerschmidt@googlemail.com>"};
 char *DESIGNER[] = {"Tom Messerschmidt <tom.messerschmidt@googlemail.com>"};
@@ -28,8 +31,8 @@ struct option args[] = {
 
 void show_version(void)
 {
-	puts("- JetSpace Logistics package management frontend -");
-	puts("Copyright (C) 2015 Marius Messerschmidt (JetSpace)");
+	puts(_("- JetSpace Logistics package management frontend -"));
+	puts(_("Copyright (C) 2015 Marius Messerschmidt (JetSpace)"));
 	puts("--------------------------------------------------\n");
 
 	printf(" -	Version %s\n", VERSION);
@@ -46,27 +49,29 @@ void show_version(void)
 
 void show_help(void)
 {
-	puts("- JetSpace Logistics package management frontend -");
+	puts(_("- JetSpace Logistics package management frontend -"));
 	puts("Copyright (C) 2015 Marius Messerschmidt (JetSpace)");
 	puts("--------------------------------------------------\n");
 
-	puts("Available Options:");
-	puts(" :: System functions");
-	puts("	-l | --listall          : Print all available packages to stdout");
-	puts("	-h | --help             : Show this help output");
-	puts("	-v | --version          : Print version information");
-	puts(" :: Pacman wraper functions");
-	puts("	-i | --install [pkg]    : Install [pkg]");
-	puts("	-r | --remove  [pkg]    : Remove  [pkg]");
-	puts("	-u | --update           : Update package data base");
-	puts("	-U | --upgrade          : Update all packages");
-	puts(" :: GUI functions");
-	puts("	-g | --gui              : Show GUI package manager");
-  puts("	-x | --gui-updates      : Show GUI package manager (show updates)");
+	puts(_("Available Options:"));
+	puts(_(" :: System functions"));
+	puts(_("	-l | --listall          : Print all available packages to stdout"));
+	puts(_("	-h | --help             : Show this help output"));
+	puts(_("	-v | --version          : Print version information"));
+	puts(_(" :: Pacman wraper functions"));
+	puts(_("	-i | --install [pkg]    : Install [pkg]"));
+	puts(_("	-r | --remove  [pkg]    : Remove  [pkg]"));
+	puts(_("	-u | --update           : Update package data base"));
+	puts(_("	-U | --upgrade          : Update all packages"));
+	puts(_(" :: GUI functions"));
+	puts(_("	-g | --gui              : Show GUI package manager"));
+  puts(_("	-x | --gui-updates      : Show GUI package manager (show updates)"));
 }
 
 int main(int argc, char **argv)
 {
+    setlocale(LC_ALL, "" );
+    textdomain("logistics");
     int c =0;
     while(( c = getopt_long(argc, argv, ":lhvi:r:uUgx", args, NULL)) != -1)
     {
@@ -96,9 +101,11 @@ int main(int argc, char **argv)
                	system_upgrade();
             break;
             case 'g':
+                gtk_init(&argc, &argv);
                 init_gui(argc, argv, 0);
             break;
             case 'x':
+                gtk_init(&argc, &argv);
                 init_gui(argc, argv, 1);
             break;
 			default:

@@ -17,19 +17,19 @@ void load_installed(void)
   GtkTreeViewColumn *column;
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Name", renderer, "text", PKG_NAME, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Name"), renderer, "text", PKG_NAME, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Version", renderer, "text", PKG_VERSION, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Version"), renderer, "text", PKG_VERSION, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Size (kb)", renderer, "text", PKG_ISIZE, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Size (kb)"), renderer, "text", PKG_ISIZE, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("URL", renderer, "text", PKG_URL, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("URL"), renderer, "text", PKG_URL, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), column);
 
   //create filter
@@ -45,7 +45,7 @@ void load_installed(void)
   g_signal_connect(G_OBJECT(list_view), "row-activated", G_CALLBACK(app_clicked), NULL);
 
   //render everything
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "Installed Packages");
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), _("Installed Packages"));
   gtk_widget_show_all(basewin);
 
 }

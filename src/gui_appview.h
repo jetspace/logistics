@@ -33,7 +33,7 @@ void install_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
 	gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
 
-	char *message = g_strdup_printf("Please enter the root password to install %s", name);
+	char *message = g_strdup_printf(_("Please enter the root password to install %s"), name);
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy %s --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", name, message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
@@ -70,7 +70,7 @@ void remove_app(GtkWidget *w, GdkEvent *e, gpointer p)
 	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
 	gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
 
-	char *message = g_strdup_printf("Please enter the root password to remove %s", name);
+	char *message = g_strdup_printf(_("Please enter the root password to remove %s"), name);
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -R %s --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", name, message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
@@ -149,7 +149,7 @@ void load_appview(char *app)
   snprintf(size, 20, "%ld kb", alpm_pkg_get_isize(i->data) / 1000);
   gtk_label_set_text(GTK_LABEL(pkgsize), size);
 
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "App details:");
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), _("Package details:"));
 
   if(is_installed)
     gtk_widget_set_sensitive(installbutton, FALSE);

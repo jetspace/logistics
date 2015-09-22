@@ -70,7 +70,7 @@ void refresh_clicked(GtkWidget *w, GdkEvent *e, gpointer p)
   gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
   gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
 
-  char *message = g_strdup_printf("Please enter the root password to update package data base");
+  char *message = g_strdup_printf(_("Please enter the root password to update package data base"));
   FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Sy --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", message), "r");
   GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
   g_io_add_watch(channel, G_IO_IN, new_output, pacman);
@@ -92,7 +92,7 @@ void build_base_window(void)
 
   gtk_window_set_titlebar (GTK_WINDOW(basewin), header);
 
-  GtkWidget *refresh = gtk_button_new_with_label("Refresh");
+  GtkWidget *refresh = gtk_button_new_with_label(_("Refresh"));
   gtk_header_bar_pack_start(GTK_HEADER_BAR(header), refresh);
   g_signal_connect(G_OBJECT(refresh), "clicked", G_CALLBACK(refresh_clicked), NULL);
 
@@ -105,22 +105,22 @@ void build_base_window(void)
 
   //fill toolbar
     //HOME
-    GtkToolItem *home = gtk_tool_button_new(NULL, "Home");
+    GtkToolItem *home = gtk_tool_button_new(NULL, _("Home"));
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(home), 0);
     g_signal_connect(G_OBJECT(home), "clicked", G_CALLBACK(clicked_home), NULL);
 
     //SEARCH
-    GtkToolItem *search = gtk_tool_button_new(NULL, "Search");
+    GtkToolItem *search = gtk_tool_button_new(NULL, _("Search"));
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(search), -1);
     g_signal_connect(G_OBJECT(search), "clicked", G_CALLBACK(clicked_search), NULL);
 
     //INSTALLED
-    GtkToolItem *installed = gtk_tool_button_new(NULL, "Installed");
+    GtkToolItem *installed = gtk_tool_button_new(NULL, _("Installed"));
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(installed), -1);
     g_signal_connect(G_OBJECT(installed), "clicked", G_CALLBACK(clicked_installed), NULL);
 
     //UPDATES
-    GtkToolItem *updates = gtk_tool_button_new(NULL, "Updates");
+    GtkToolItem *updates = gtk_tool_button_new(NULL, _("Updates"));
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(updates), -1);
     g_signal_connect(G_OBJECT(updates), "clicked", G_CALLBACK(clicked_updates), NULL);
 
@@ -186,8 +186,7 @@ void update_packagelists(void)
 
 void init_gui(int argc, char **argv, int mode)
 {
-  gtk_init(&argc, &argv);
-
+  textdomain("logistics");
   build_base_window();
 
   init_package_list();

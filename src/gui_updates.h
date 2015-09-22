@@ -46,7 +46,7 @@ void update_all(GtkWidget *w, GdkEvent *e, gpointer p)
 	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pb));
 	gtk_box_pack_end(GTK_BOX(box), pb, FALSE, FALSE, 0);
 
-	char *message = g_strdup_printf("Please enter the root password to update your system");
+	char *message = g_strdup_printf(_("Please enter the root password to update your system"));
 	FILE *pacman = popen(g_strdup_printf("sh -c \"gksudo 'pacman -Su --noconfirm' --message '%s' && echo -n DONE || echo -n DONE\"", message), "r");
 	GIOChannel *channel = g_io_channel_unix_new(fileno(pacman));
 	g_io_add_watch(channel, G_IO_IN, new_output, pacman);
@@ -72,15 +72,15 @@ void load_updates(void)
   GtkTreeViewColumn *column;
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Name", renderer, "text", UPDATE_NAME, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Name"), renderer, "text", UPDATE_NAME, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(update_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Version (old)", renderer, "text", UPDATE_VERSION_OLD, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Version (old)"), renderer, "text", UPDATE_VERSION_OLD, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(update_view), column);
 
   renderer = gtk_cell_renderer_text_new();
-  column = gtk_tree_view_column_new_with_attributes("Version (new)", renderer, "text", UPDATE_VERSION_NEW, NULL);
+  column = gtk_tree_view_column_new_with_attributes(_("Version (new)"), renderer, "text", UPDATE_VERSION_NEW, NULL);
   gtk_tree_view_append_column(GTK_TREE_VIEW(update_view), column);
 
 	updates = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
@@ -102,7 +102,7 @@ void load_updates(void)
 	}
 
   //render everything
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), "Updates");
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR(header), _("Updates"));
   gtk_widget_show_all(basewin);
 
 }
